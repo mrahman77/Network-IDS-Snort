@@ -1,0 +1,9 @@
+# Local rules (Snort 2.x) - tuned for lab testing and unique high SIDs
+# Inbound SSH brute force test (external -> HOME_NET)
+alert tcp any any -> $HOME_NET 22 (msg:"LOCAL SSH brute force test (inbound)"; flags:S; flow:stateless; detection_filter:track by_src, count 3, seconds 10; sid:5000001; rev:1;)
+
+# Outbound port scan test (HOME_NET -> any)
+alert tcp $HOME_NET any -> any any (msg:"LOCAL Port scan test (outbound)"; flags:S; flow:stateless; detection_filter:track by_src, count 5, seconds 10; sid:5000002; rev:1;)
+
+# Large DNS UDP packets (exfil test)
+alert udp any any -> any 53 (msg:"LOCAL Possible DNS TXT exfiltration (large DNS)"; dsize:>220; sid:5000003; rev:1;)

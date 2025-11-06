@@ -1,0 +1,4 @@
+# sample snort.conf snippet for demo (merge into /etc/snort/snort.conf)
+var HOME_NET 10.211.55.0/24
+include $RULE_PATH/local.rules
+output alert_fast: /var/log/snort/alert
